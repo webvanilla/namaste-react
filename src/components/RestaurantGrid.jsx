@@ -1,22 +1,10 @@
-import React,{useEffect, useState} from 'react'
+import React,{ useState} from 'react'
 import RestaurantCard from './RestaurantCard'
 import { Link } from 'react-router';
-import { RESTAURANT_API } from '../utilities/constants.js';
+import useRestaurantList from '../utilities/useRestaurantList.js';
 const RestaurantGrid = () => {
-    const [resData,setResData]=useState([]);
+    const {resData,filteredResData,setFilteredResData}=useRestaurantList();
     const [searchedText,setSearchedText]=useState("");
-    const [filteredResData,setFilteredResData]=useState([]);
-
-    const fetchRestaurants=async()=>{
-        const data=await fetch(RESTAURANT_API);
-        const jsonData=await data.json();
-        setResData(jsonData?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredResData(jsonData?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    }
-
-    useEffect(()=>{
-        fetchRestaurants();
-    },[])
 
     const onSearch= ()=>{
 const filteredData= resData.filter((restaurant)=>{
