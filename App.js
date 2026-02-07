@@ -1,4 +1,4 @@
-import React from "react";
+import { useState,useEffect } from "react";
 import ReactDOM from  "react-dom/client";
 import { createBrowserRouter,Outlet,RouterProvider } from "react-router";
 import RestaurantGrid from "./src/components/RestaurantGrid";
@@ -10,12 +10,22 @@ import ErrorPage from "./src/components/ErrorPage";
 import { Provider } from "react-redux";
 import appStore from "./src/utilities/appStore";
 import Cart from "./src/components/Cart";
+import UserContext from "./src/utilities/UserContext";
 const App=()=>{
+
+    const [user,setUser]=useState("Guest");
+
+    useEffect(()=>{
+        setUser("Web Vanilla")
+    },[])
+    
     return (
         <>
         <Provider store={appStore}>
+            <UserContext.Provider value={{loggedInUser:user,setUser}}>
         <Header/>
         <Outlet/>
+        </UserContext.Provider>
         </Provider>
 </>
     )
